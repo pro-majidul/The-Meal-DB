@@ -2,10 +2,18 @@ const tagName = document.getElementsByTagName('html')[0];
 tagName.setAttribute("data-theme", "light");
 
 // // fetch all mealCategory 
-const allMealCategory = () =>{
+const allMealCategory = (show) =>{
    fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
     .then(res => res.json())
-    .then(data => allMealCard(data.categories))
+    .then(data => {
+        if(show){
+            allMealCard(data.categories)
+        }
+        else{
+            allMealCard(data.categories.slice(0,6))
+
+        }
+    })
 }
 
 // set all meal card to the card 
@@ -49,7 +57,14 @@ document.getElementById('input-field').addEventListener('keyup', function (e) {
 const mealCardById = (mils) => {
 
     const favoriteCard = document.getElementById('favorite-card');
-    favoriteCard.innerHTML = ''
+    favoriteCard.innerHTML = '';
+    if(!mils){
+        favoriteCard.innerHTML = `
+        <p class=" text-center font-bold text-5xl">NO Data found</p>
+        `
+        return;
+    }
+   
     mils.forEach(item => {
         const div = document.createElement('div');
         div.innerHTML = `
@@ -82,7 +97,11 @@ const viewDetails =(id) =>{
     .then(data => console.log(data))
 }
 
-
+// click show all btn and show all meals category
+const showAllBtn = () =>{
+    allMealCategory(true)
+    
+}
 
 
 
