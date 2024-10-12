@@ -24,10 +24,15 @@ const showCategoryButton = (buttons) =>{
 }
 
 
-const showTargetItem =async (id) =>{
+const showTargetItem =async (id , showALL) =>{
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${id}`);
     const data = await response.json();
-    allMealCard(data.meals);
+    // if(showALL){
+        allMealCard(data.meals);
+    // }else{
+    //     allMealCard(data.meals.slice(0, 12))
+
+    // }
     
 }
 
@@ -48,7 +53,8 @@ const allMealCategory = (show) => {
 }
 
 // // set all meal card to the card 
-const allMealCard = (meals) => {
+const allMealCard = (meals ) => {
+   
     const favoriteCard = document.getElementById('favorite-card');
     favoriteCard.innerHTML = ''
     meals.forEach(ele => {
@@ -77,6 +83,7 @@ const allMealCard = (meals) => {
 
 // click show all btn and show all meals category
 const showAllBtn = () => {
+    // showTargetItem (true)
     allMealCategory(true)
 
 }
@@ -152,13 +159,13 @@ const viewDetails = (id) => {
 }
 
 const showDetails = (detail) => {
-    // console.log(detail);    
+  
     const modalField = document.getElementById('show-modal');
         detail.forEach(ele => {
-            console.log(ele);
+           
              const Element = document.createElement('div');
                 Element.innerHTML = `
-                    <dialog id="my_modal3" class="modal modal-bottom sm:modal-middle">
+                    <dialog  class=" my_modal3 modal modal-bottom sm:modal-middle">
                     <div class="modal-box">
                       <h3 class="text-xl font-bold py-3">${ele.strMeal}</h3>
                       <div class="divider"></div>
@@ -177,10 +184,10 @@ const showDetails = (detail) => {
           `;
             modalField.appendChild(Element);
        
+            Element.querySelector(".my_modal3").showModal();
         })
         
-        
-        my_modal3.showModal();
+        // Element.quarySelector.showModal();
     }
 
 
